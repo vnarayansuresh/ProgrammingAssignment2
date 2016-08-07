@@ -1,48 +1,45 @@
-##  Note: <<- operator - can be used to assign a value to an object in an environment
-## that is different from the current environment
+## Cashing the Inverse of a Matrix similar to caching mean of a vecotr
+## Instead of computing it repeatedly, caching may be beneficial which will increase the computation speed
 ## 
-## Functions to create Matrix, compute inverse (retrieve input from cache if exists)- using lexical scoping
+## The following functions will create Matrix, compute inverse (retrieve input from cache if exists)- using lexical scoping
 ## First create a "matrix" (really a LIST) object 
-
-## functions do
-
-## Write a short comment describing this function
+## ASuthor: Viswanath Narayan
 
 makeCacheMatrix <- function(x = matrix()) {
-  m <- NULL
+## assigning the Inverse Matrix inv  NULL value  
+  inv <- NULL
   set <- function(y) {
     x <<- y
-    m <<- NULL
+    inv <<- NULL
   }
   get <- function() x
-  setImatrix <- function(solve) m <<- solve
-  getImatrix <- function() m
-  
-  list(set = set, get = get,
+  setImatrix <- function(solve) inv <<- solve
+  getImatrix <- function() inv
+  list(set = set,
+       get = get,
        setImatrix = setImatrix,
-       getImatrix = getImatrix)
+       getImatrix = getImatrix
+       )
   
 }
 
 
-## Write a short comment describing this function
-##The following function calculates the mean of the special "vector" created 
-##with the above function. However, it first checks to see if the mean has already
-##been calculated. If so, it gets the mean from the cache and skips the computation.
-##Otherwise, it calculates the mean of the data and sets the value of the mean in the 
-##cache via the setmean function
+
+##The following function computes the inverse of the special "matrix" created 
+##with the makeCacheMatrix above. It first checks to see if the inverse  has already
+##been computed and the matrix has not changed. If so, it gets the mean inverse of the matrix from cache and skips the computation.
+##Otherwise, it computes  the inverse of the matrix.
 
 cacheSolve <- function(x, ...) {
   ## Return a matrix that is the inverse of 'x'
   
-  m <- x$getImatrix()
-  if(!is.null(m)) {
+  inv <- x$getImatrix()
+  if(!is.null(inv)) {
     message("getting cached data")
-    return(m)
+    return(inv)
   }
   data <- x$get()
-  m <- solve(data, ...)
-  x$setImatrix(m)
-  m
+  inv <- solve(data, ...)
+  x$setImatrix(inv)
+  inv
 }
-
